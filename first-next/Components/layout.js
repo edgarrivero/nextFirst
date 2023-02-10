@@ -19,8 +19,20 @@ import ListItemIcon from '@mui/material/ListItemIcon';
 import ListItemText from '@mui/material/ListItemText';
 import InboxIcon from '@mui/icons-material/MoveToInbox';
 import MailIcon from '@mui/icons-material/Mail';
+import AccountBoxIcon from '@mui/icons-material/AccountBox';
+import DashboardIcon from '@mui/icons-material/Dashboard';
+import AccountCircle from '@mui/icons-material/AccountCircle';
+import Menu from '@mui/material/Menu';
+import MenuItem from '@mui/material/MenuItem';
+import { Grid } from '@mui/material';
 
 const drawerWidth = 240;
+
+const Item = styled('div')(({ theme }) => ({
+  backgroundColor: theme.palette.mode === 'dark' ? '#1A2027' : '#fff',
+  borderColor: theme.palette.mode === 'dark' ? '#444d58' : '#ced7e0',
+  padding: theme.spacing(1),
+}));
 
 const openedMixin = (theme) => ({
   width: drawerWidth,
@@ -91,6 +103,9 @@ export default function Layout({ children }) {
   const theme = useTheme();
   const [open, setOpen] = React.useState(false);
 
+  const [auth, setAuth] = React.useState(true);
+  const [anchorEl, setAnchorEl] = React.useState(null);
+
   const handleDrawerOpen = () => {
     setOpen(true);
   };
@@ -99,11 +114,19 @@ export default function Layout({ children }) {
     setOpen(false);
   };
 
+  const handleMenu = (event) => {
+    setAnchorEl(event.currentTarget);
+  };
+
+  const handleClose = () => {
+    setAnchorEl(null);
+  };
+
   return (
     <Box sx={{ display: 'flex' }}>
       <CssBaseline />
-      <AppBar position="fixed" open={open}>
-        <Toolbar>
+      <AppBar position="fixed" open={open} sx={{ boxShadow: 0 }} >
+        <Toolbar sx={{ bgcolor: "#f9fafb", color: 'GrayText', boxShadow: 0 }}>
           <IconButton
             color="inherit"
             aria-label="open drawer"
@@ -116,12 +139,59 @@ export default function Layout({ children }) {
           >
             <MenuIcon />
           </IconButton>
-          <Typography variant="h6" noWrap component="div">
-            Mini variant drawer
-          </Typography>
+          <Box sx={{ flexGrow: 1 }}>
+          <Grid container spacing={2}>
+              <Grid xs={8}>
+              <Item sx={{ bgcolor: "transparent", alignSelf: 'flex-end' }}>
+                <Typography variant="h6" noWrap component="div">
+                  MarcusTech
+                </Typography>
+              </Item>
+              </Grid>
+              <Grid xs={4}>
+              <Item sx={{ bgcolor: "transparent", textAlign:'end', alignSelf: 'flex-end' }}>
+                    <IconButton
+                      size="large"
+                      aria-label="account of current user"
+                      aria-controls="menu-appbar"
+                      aria-haspopup="true"
+                      onClick={handleMenu}
+                      color="inherit"
+                    >
+                      <AccountCircle />
+                    </IconButton>
+                    <Menu
+                      id="menu-appbar"
+                      anchorEl={anchorEl}
+                      anchorOrigin={{
+                        vertical: 'top',
+                        horizontal: 'right',
+                      }}
+                      keepMounted
+                      transformOrigin={{
+                        vertical: 'top',
+                        horizontal: 'right',
+                      }}
+                      open={Boolean(anchorEl)}
+                      onClose={handleClose}
+                    >
+                      <MenuItem onClick={handleClose}>Profile</MenuItem>
+                      <MenuItem onClick={handleClose}>My account</MenuItem>
+                    </Menu>
+              </Item>
+              </Grid>
+          </Grid>
+          </Box>
+          
+          
         </Toolbar>
       </AppBar>
-      <Drawer variant="permanent" open={open}>
+      <Drawer variant="permanent" open={open} PaperProps={{
+            sx: {
+            backgroundColor: "#f9fafb",
+            color: "#95a0aa",
+            }
+        }}>
         <DrawerHeader>
           <IconButton onClick={handleDrawerClose}>
             {theme.direction === 'rtl' ? <ChevronRightIcon /> : <ChevronLeftIcon />}
@@ -129,25 +199,53 @@ export default function Layout({ children }) {
         </DrawerHeader>
         <Divider />
         <List>
-            <Link href="/About"><ListItem key="1" disablePadding sx={{ display: 'block' }}>
-                <ListItemButton
-                    sx={{
-                    minHeight: 48,
-                    justifyContent: open ? 'initial' : 'center',
-                    px: 2.5,
-                    }}
-                >
-                    <ListItemIcon
-                    sx={{
-                        minWidth: 0,
-                        mr: open ? 3 : 'auto',
-                        justifyContent: 'center',
-                    }}
+            <Link href="/" style={{ textDecoration: 'none', color: 'inherit' }}>
+                <ListItem key="1" disablePadding sx={{ display: 'block' }}>
+                    <ListItemButton
+                        sx={{
+                        minHeight: 48,
+                        justifyContent: open ? 'initial' : 'center',
+                        px: 2.5,
+                        mx: '.5rem',
+                        borderRadius: '.5rem'
+                        }}
                     >
-                    <InboxIcon />
-                    </ListItemIcon>
-                    <ListItemText primary="About" sx={{ opacity: open ? 1 : 0 }} />
-                    
+                        <ListItemIcon
+                        sx={{
+                            minWidth: 0,
+                            mr: open ? 3 : 'auto',
+                            justifyContent: 'center',
+                        }}
+                        >
+                        <DashboardIcon />
+                        </ListItemIcon>
+                        <ListItemText  primary="inicio" sx={{ opacity: open ? 1 : 0 }} />
+                            
+                    </ListItemButton>
+                </ListItem>
+            </Link>
+            <Link href="/About" style={{ textDecoration: 'none', color: 'inherit' }}>
+                <ListItem key="1" disablePadding sx={{ display: 'block' }}>
+                    <ListItemButton
+                        sx={{
+                        minHeight: 48,
+                        justifyContent: open ? 'initial' : 'center',
+                        px: 2.5,
+                        mx: '.5rem',
+                        borderRadius: '.5rem'
+                        }}
+                    >
+                        <ListItemIcon
+                        sx={{
+                            minWidth: 0,
+                            mr: open ? 3 : 'auto',
+                            justifyContent: 'center',
+                        }}
+                        >
+                        <AccountBoxIcon />
+                        </ListItemIcon>
+                        <ListItemText  primary="Usuarios" sx={{ opacity: open ? 1 : 0 }} />
+                            
                     </ListItemButton>
                 </ListItem>
             </Link>

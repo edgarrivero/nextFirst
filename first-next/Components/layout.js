@@ -274,6 +274,31 @@ export default function Layout({ children }) {
                     </ListItemButton>
                 </ListItem>
             </Link>
+            <Link href="/tablebuttons" style={{ textDecoration: 'none', color: 'inherit' }}>
+                <ListItem key="1" disablePadding sx={{ display: 'block' }}>
+                    <ListItemButton
+                        sx={{
+                        minHeight: 48,
+                        justifyContent: open ? 'initial' : 'center',
+                        px: 2.5,
+                        mx: '.5rem',
+                        borderRadius: '.5rem'
+                        }}
+                    >
+                        <ListItemIcon
+                        sx={{
+                            minWidth: 0,
+                            mr: open ? 3 : 'auto',
+                            justifyContent: 'center',
+                        }}
+                        >
+                        <AccountBoxIcon />
+                        </ListItemIcon>
+                        <ListItemText  primary="Tabla botones" sx={{ opacity: open ? 1 : 0 }} />
+                            
+                    </ListItemButton>
+                </ListItem>
+            </Link>
         </List>
         <Divider />
         <List>

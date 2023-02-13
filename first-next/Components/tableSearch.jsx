@@ -36,13 +36,13 @@ import {
   GridToolbarQuickFilter,
   GridLinkOperator,
 } from '@mui/x-data-grid';
-import { useDemoData } from '@mui/x-data-grid-generator';
+import Alert from '@mui/material/Alert';
 
 function QuickSearchToolbar() {
   return (
     <Box
       sx={{
-        p: 0.5,
+        p: 1,
         pb: 0,
       }}
     >
@@ -58,23 +58,49 @@ function QuickSearchToolbar() {
   );
 }
 
-export default function QuickFilteringCustomizedGrid() {
+export default function QuickFilteringCustomizedGrid({ handleSearch }) {
+  const [message, setMessage] = React.useState('');
+
   const [tableData, setTableData] = useState([])
     useEffect(() => {
-      fetch("https://jsonplaceholder.typicode.com/posts")
+      fetch("https://jsonplaceholder.typicode.com/photos")
         .then((data) => data.json())
         .then((data) => setTableData(data))
   }, [])
 
   // Otherwise filter will be applied on fields such as the hidden column id
+//   "albumId": 1,
+// "id": 8,
+// "title": "aut porro officiis laborum odit ea laudantium corporis",
+// "url": "https://via.placeholder.com/600/54176f",
+// "thumbnailUrl": "https://via.placeholder.com/150/54176f
    const columns = [
     { field: 'id', headerName: 'ID' },
-    { field: 'title', headerName: 'Title', width: 300 },
-    { field: 'body', headerName: 'Body', width: 600 }
+    { field: 'albumId', headerName: 'Album', width: 100 },
+    { field: 'title', headerName: 'Titulo', width: 300 },
+    { field: 'url', headerName: 'Url', width: 300 },
+    { field: 'thumbnailUrl', headerName: 'ThumbnailUrl', width: 300 },
+    {
+      field: 'actions',
+      type: 'actions',
+      headerName: 'Actions',
+      width: 100,
+      editable: true,
+      cellClassName: 'actions',
+      renderCell: (params) => {
+        return `${params.id}`;
+      }
+    }
   ]
+  const handleRowClick = (params) => {
+    setMessage(`Movie "${params.row.title}" clicked`);
+    handleSearch(params);
+  };
+
 
   return (
-    <Box sx={{ height: 400, width: 1 }}>
+    
+    <Box sx={{ height: 400, width: 1, bgcolor: 'white', padding: '1rem', borderRadius: '1rem', boxShadow: 12 }}>
       <DataGrid
         rows={tableData}
         columns={columns}
@@ -87,7 +113,9 @@ export default function QuickFilteringCustomizedGrid() {
           },
         }}
         components={{ Toolbar: QuickSearchToolbar }}
+        onRowClick={handleRowClick}
       />
+      {message && <Alert severity="info">{message}</Alert>}
     </Box>
   );
 }

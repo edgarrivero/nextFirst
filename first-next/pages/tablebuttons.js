@@ -1,11 +1,10 @@
 import * as React from 'react';
-import { useState, useEffect } from 'react';
+
 import Box from '@mui/material/Box';
 import Button from '@mui/material/Button';
-import TextField from '@mui/material/TextField';
 import Typography from '@mui/material/Typography';
 import Modal from '@mui/material/Modal';
-import QuickFilteringCustomLogic from "Components/tableSearch";
+import InfiniteLoadingGrid from "Components/tableButtons";
 import AddIcon from '@mui/icons-material/Add';
 import Grid from '@mui/system/Unstable_Grid';
 import styled from '@mui/system/styled';
@@ -29,20 +28,9 @@ const style = {
 }
 
 export default function About() {
-  const [contain, setContain] = useState('');
-  const [open, setOpen] = useState(false);
-  const handleOpen = () => {
-
-    setOpen(true)
-  };
+  const [open, setOpen] = React.useState(false);
+  const handleOpen = () => setOpen(true);
   const handleClose = () => setOpen(false);
-  
-
-  const handleSearch = (e) => {
-    console.log("si llega");
-    console.log(e);
-    setContain(e.id);
-  }
 
 
   return (
@@ -62,8 +50,7 @@ export default function About() {
         </Grid>
         </Box>
 
-        <QuickFilteringCustomLogic handleSearch={handleSearch} />
-
+        <InfiniteLoadingGrid />
         <Modal
             open={open}
             onClose={handleClose}
@@ -77,7 +64,6 @@ export default function About() {
             <Typography id="modal-modal-description" sx={{ mt: 2 }}>
                 Duis mollis, est non commodo luctus, nisi erat porttitor ligula.
             </Typography>
-            <TextField id="standard-basic" label="Standard" variant="standard" value={contain} />
             </Box>
         </Modal>
         

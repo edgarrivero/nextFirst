@@ -1,19 +1,18 @@
 import * as React from 'react';
-
-import Box from '@mui/material/Box';
-import Button from '@mui/material/Button';
-import Typography from '@mui/material/Typography';
-import Modal from '@mui/material/Modal';
-import InfiniteLoadingGrid from "Components/tableButtons";
+import { useState, useEffect } from 'react';
+import {Button, TextField, Typography, Modal, Box } from '@mui/material';
+import DenseTable from "Components/tableButtons";
 import AddIcon from '@mui/icons-material/Add';
 import Grid from '@mui/system/Unstable_Grid';
 import styled from '@mui/system/styled';
+
+
 
 const Item = styled('div')(({ theme }) => ({
     backgroundColor: theme.palette.mode === 'dark' ? '#1A2027' : '#fff',
     borderColor: theme.palette.mode === 'dark' ? '#444d58' : '#ced7e0',
     padding: theme.spacing(1),
-}));
+  }));
 
 const style = {
     position: 'absolute',
@@ -28,11 +27,22 @@ const style = {
 }
 
 export default function About() {
-  const [open, setOpen] = React.useState(false);
+  const [open, setOpen] = useState(false);
+  
+
+
   const handleOpen = () => setOpen(true);
   const handleClose = () => setOpen(false);
 
+  const actionFunction = (e) => {
+    var newOrder = {namep, lastNamep, agep};
+    rows.push(newOrder);
 
+    setRows(rows);
+    console.log(rows);
+  }
+
+  
   return (
     <div sx={{ backgroundColor: '#f9fafb' }}>
         <Box sx={{ flexGrow: 1, mb: 3 }}>
@@ -50,7 +60,7 @@ export default function About() {
         </Grid>
         </Box>
 
-        <InfiniteLoadingGrid />
+        <DenseTable  />
         <Modal
             open={open}
             onClose={handleClose}
@@ -64,6 +74,9 @@ export default function About() {
             <Typography id="modal-modal-description" sx={{ mt: 2 }}>
                 Duis mollis, est non commodo luctus, nisi erat porttitor ligula.
             </Typography>
+
+                
+            
             </Box>
         </Modal>
         

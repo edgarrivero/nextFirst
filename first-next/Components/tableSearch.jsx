@@ -100,7 +100,7 @@ export default function QuickFilteringCustomizedGrid({ handleSearch }) {
 
   return (
     
-    <Box sx={{ height: 400, width: 1, bgcolor: 'white', padding: '1rem', borderRadius: '1rem', boxShadow: 12 }}>
+    <Box sx={{ height: 600, width: 1, bgcolor: 'white', padding: '1rem', borderRadius: '1rem', boxShadow: 12 }}>
       <DataGrid
         rows={tableData}
         columns={columns}
@@ -110,6 +110,9 @@ export default function QuickFilteringCustomizedGrid({ handleSearch }) {
               items: [],
               quickFilterLogicOperator: GridLinkOperator.Or,
             },
+          },
+          pagination: {
+            pageSize: 25,
           },
         }}
         components={{ Toolbar: QuickSearchToolbar }}

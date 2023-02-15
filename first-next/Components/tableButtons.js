@@ -11,6 +11,9 @@ import TableRow from '@mui/material/TableRow';
 import Paper from '@mui/material/Paper';
 import { useState, useEffect } from 'react';
 import AddIcon from '@mui/icons-material/Add';
+import IconButton from '@mui/material/IconButton';
+import DeleteIcon from '@mui/icons-material/Delete';
+
 
 const Item = styled('div')(({ theme }) => ({
   backgroundColor: theme.palette.mode === 'dark' ? '#1A2027' : '#fff',
@@ -23,6 +26,8 @@ function createData(name, lastName, age) {
 }
 
 export default function DenseTable() {
+  
+
   const [namep, setName] = useState('');
   const [lastNamep, setLastName] = useState('');
   const [agep, setAge] = useState('');
@@ -38,6 +43,10 @@ export default function DenseTable() {
     const newRow = { name: namep, lastName: lastNamep, age: agep };
     setRows([...rows, newRow]);
   };
+  const handleDeleteRow = (index) => {
+    const newData = rows.filter((_, i) => i !== index);
+    setRows(newData);
+  };
 
   const handleChangeName = e => {
     setName(e.target.value);
@@ -49,9 +58,10 @@ export default function DenseTable() {
     setAge(e.target.value);
   }
 
+  
 
   return (
-    <TableContainer component={Paper} sx={{ padding: '1rem', borderRadius: '1rem' }}>
+    <TableContainer component={Paper} sx={{ padding: '1rem', borderRadius: '1rem', boxShadow: 12 }}>
       <Grid container spacing={2}>
           <Grid item xs={3}>
               <Item>
@@ -94,6 +104,11 @@ export default function DenseTable() {
               </TableCell>
               <TableCell>{row.lastName}</TableCell>
               <TableCell>{row.age}</TableCell>
+              <TableCell>
+              <IconButton aria-label="delete" onClick={() => handleDeleteRow(index)}>
+                <DeleteIcon />
+              </IconButton>
+              </TableCell>
             </TableRow>
           ))}
         </TableBody>

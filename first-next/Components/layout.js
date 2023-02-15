@@ -1,4 +1,5 @@
 import * as React from 'react';
+import { useState, useEffect } from 'react';
 import Link from "next/link"
 import { styled, useTheme } from '@mui/material/styles';
 import Box from '@mui/material/Box';
@@ -25,6 +26,7 @@ import AccountCircle from '@mui/icons-material/AccountCircle';
 import Menu from '@mui/material/Menu';
 import MenuItem from '@mui/material/MenuItem';
 import { Grid } from '@mui/material';
+import { useRouter } from 'next/router'
 
 const drawerWidth = 240;
 
@@ -100,11 +102,13 @@ const Drawer = styled(MuiDrawer, { shouldForwardProp: (prop) => prop !== 'open' 
 );
 
 export default function Layout({ children }) {
-  const theme = useTheme();
-  const [open, setOpen] = React.useState(false);
+  const router = useRouter()
 
-  const [auth, setAuth] = React.useState(true);
-  const [anchorEl, setAnchorEl] = React.useState(null);
+  const theme = useTheme();
+  const [open, setOpen] = useState(false);
+
+  const [auth, setAuth] = useState(true);
+  const [anchorEl, setAnchorEl] = useState(null);
 
   const handleDrawerOpen = () => {
     setOpen(true);
@@ -200,14 +204,15 @@ export default function Layout({ children }) {
         <Divider />
         <List>
             <Link href="/" style={{ textDecoration: 'none', color: 'inherit' }}>
-                <ListItem key="1" disablePadding sx={{ display: 'block' }}>
+                <ListItem key="1" disablePadding sx={{ display: 'block',  }}>
                     <ListItemButton
                         sx={{
                         minHeight: 48,
                         justifyContent: open ? 'initial' : 'center',
                         px: 2.5,
                         mx: '.5rem',
-                        borderRadius: '.5rem'
+                        borderRadius: '.5rem',
+                        backgroundColor: router.pathname === '/' ? "#071b49": '',
                         }}
                     >
                         <ListItemIcon
@@ -232,7 +237,8 @@ export default function Layout({ children }) {
                         justifyContent: open ? 'initial' : 'center',
                         px: 2.5,
                         mx: '.5rem',
-                        borderRadius: '.5rem'
+                        borderRadius: '.5rem',
+                        backgroundColor: router.pathname === '/About' ? "#071b49": '',
                         }}
                     >
                         <ListItemIcon
@@ -257,15 +263,17 @@ export default function Layout({ children }) {
                         justifyContent: open ? 'initial' : 'center',
                         px: 2.5,
                         mx: '.5rem',
-                        borderRadius: '.5rem'
+                        borderRadius: '.5rem',
+                        backgroundColor: router.pathname === '/Search' ? "#071b49": '',
                         }}
                     >
                         <ListItemIcon
-                        sx={{
+                         sx={{
                             minWidth: 0,
                             mr: open ? 3 : 'auto',
                             justifyContent: 'center',
-                        }}
+                            
+                        }} 
                         >
                         <AccountBoxIcon />
                         </ListItemIcon>
@@ -274,7 +282,7 @@ export default function Layout({ children }) {
                     </ListItemButton>
                 </ListItem>
             </Link>
-            <Link href="/tablebuttons" style={{ textDecoration: 'none', color: 'inherit' }}>
+            <Link href="/tablebuttons" activeClassName={router.pathname === '/tablebuttons' ? 'active' : ''} style={{ textDecoration: 'none', color: 'inherit' }}>
                 <ListItem key="1" disablePadding sx={{ display: 'block' }}>
                     <ListItemButton
                         sx={{
@@ -282,7 +290,8 @@ export default function Layout({ children }) {
                         justifyContent: open ? 'initial' : 'center',
                         px: 2.5,
                         mx: '.5rem',
-                        borderRadius: '.5rem'
+                        borderRadius: '.5rem',
+                        backgroundColor: router.pathname === '/tablebuttons' ? "#6300e6": '',
                         }}
                     >
                         <ListItemIcon

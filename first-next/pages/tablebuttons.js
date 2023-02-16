@@ -47,20 +47,21 @@ export default function About() {
     <div sx={{ backgroundColor: '#f9fafb' }}>
         <Box sx={{ flexGrow: 1, mb: 3 }}>
         <Grid container spacing={2}>
-            <Grid xs={8}>
+            <Grid xs={6}>
             <Item sx={{ bgcolor: "transparent" }}><Typography variant="h5" >Usuarios</Typography></Item>
             </Grid>
-            <Grid xs={4}>
+            <Grid xs={6}>
             <Item sx={{ bgcolor: "transparent", textAlign:'end' }}>
                 <Button onClick={handleOpen} variant="contained" startIcon={<AddIcon />}>
                     Agregar
                 </Button>
             </Item>
             </Grid>
+            
         </Grid>
         </Box>
-
         <DenseTable  />
+        
         <Modal
             open={open}
             onClose={handleClose}

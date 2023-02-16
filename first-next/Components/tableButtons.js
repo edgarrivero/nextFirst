@@ -1,7 +1,7 @@
 import * as React from 'react';
 import Grid from '@mui/material/Grid';
 import styled from '@mui/system/styled';
-import {TextField, Button} from '@mui/material';
+import {TextField, Button, Box} from '@mui/material';
 import Table from '@mui/material/Table';
 import TableBody from '@mui/material/TableBody';
 import TableCell from '@mui/material/TableCell';
@@ -61,58 +61,59 @@ export default function DenseTable() {
   
 
   return (
-    <TableContainer component={Paper} sx={{ padding: '1rem', borderRadius: '1rem', boxShadow: 12 }}>
-      <Grid container spacing={2}>
-          <Grid item xs={3}>
-              <Item>
-                  <TextField id="txt-name" label="Nombre" variant="standard" value={namep} onChange={handleChangeName}  />
-              </Item>
-          </Grid>
-          <Grid item xs={3}>
-              <Item>
+      <TableContainer component={Paper} sx={{ padding: '1rem', borderRadius: '1rem', boxShadow: 12 }}>
+        <Grid container spacing={2}>
+            <Grid item xs={3}>
+                <Item>
+                    <TextField id="txt-name" label="Nombre" variant="standard" value={namep} onChange={handleChangeName}  />
+                </Item>
+            </Grid>
+            <Grid item xs={3}>
+                <Item>
                   <TextField ids="txt-lastname" label="Apellido" variant="standard" value={lastNamep} onChange={handleChangeLastName} />
-              </Item>
-          </Grid>
-          <Grid item xs={3}>
-              <Item>
-                      <TextField id="txt-age" label="Edad" variant="standard" value={agep} onChange={handleChangeAge} />
-              </Item>
-          </Grid>
-          <Grid item xs={3}>
-              <Item>
-                <Button startIcon={<AddIcon />} variant="contained" onClick={handleAddRow}>Agregar</Button>
-              </Item>
-          </Grid>
-      </Grid>
-      
-      <Table sx={{ minWidth: 650 }} size="small" aria-label="a dense table" >
-        <TableHead>
-          <TableRow>
-            <TableCell>Nombre</TableCell>
-            <TableCell>Apellido</TableCell>
-            <TableCell>Edad</TableCell>
-          </TableRow>
-        </TableHead>
-        <TableBody>
-          {rows.map((row,index) => (
-            <TableRow
-              key={index}
-              sx={{ '&:last-child td, &:last-child th': { border: 0 } }}
-            >
-              <TableCell component="th" scope="row">
-                {row.name}
-              </TableCell>
-              <TableCell>{row.lastName}</TableCell>
-              <TableCell>{row.age}</TableCell>
-              <TableCell>
-              <IconButton aria-label="delete" onClick={() => handleDeleteRow(index)}>
-                <DeleteIcon />
-              </IconButton>
-              </TableCell>
+                </Item>
+            </Grid>
+            <Grid item xs={3}>
+                <Item>
+                  <TextField id="txt-age" label="Edad" variant="standard" value={agep} onChange={handleChangeAge} />
+                </Item>
+            </Grid>
+            <Grid item xs={3}>
+                <Item>
+                  <Button startIcon={<AddIcon />} variant="contained" onClick={handleAddRow}>Agregar</Button>
+                </Item>
+            </Grid>
+        </Grid>
+        
+        <Table size="small" aria-label="a dense table" >
+          <TableHead sx={{ backgroundColor: '#e8ebef' }}>
+            <TableRow>
+              <TableCell>Nombre</TableCell>
+              <TableCell>Apellido</TableCell>
+              <TableCell>Edad</TableCell>
+              <TableCell>Acciones</TableCell>
             </TableRow>
-          ))}
-        </TableBody>
-      </Table>
-    </TableContainer>
+          </TableHead>
+          <TableBody>
+            {rows.map((row,index) => (
+              <TableRow
+                key={index}
+                sx={{ '&:last-child td, &:last-child th': { border: 0 } }}
+              >
+                <TableCell component="th" scope="row">
+                  {row.name}
+                </TableCell>
+                <TableCell>{row.lastName}</TableCell>
+                <TableCell>{row.age}</TableCell>
+                <TableCell>
+                  <IconButton aria-label="delete" onClick={() => handleDeleteRow(index)}>
+                    <DeleteIcon />
+                  </IconButton>
+                </TableCell>
+              </TableRow>
+            ))}
+          </TableBody>
+        </Table>
+      </TableContainer>
   );
 }

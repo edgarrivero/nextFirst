@@ -53,16 +53,9 @@
 
 
 import * as React from 'react';
+import { Box, Table, TableContainer, TablePagination, TableHead, TableBody, TableRow, TableCell, TextField } from "@mui/material";
 import PropTypes from 'prop-types';
 import { alpha } from '@mui/material/styles';
-import Box from '@mui/material/Box';
-import Table from '@mui/material/Table';
-import TableBody from '@mui/material/TableBody';
-import TableCell from '@mui/material/TableCell';
-import TableContainer from '@mui/material/TableContainer';
-import TableHead from '@mui/material/TableHead';
-import TablePagination from '@mui/material/TablePagination';
-import TableRow from '@mui/material/TableRow';
 import TableSortLabel from '@mui/material/TableSortLabel';
 import Toolbar from '@mui/material/Toolbar';
 import Typography from '@mui/material/Typography';
@@ -210,14 +203,7 @@ function EnhancedTableToolbar(props) {
           {numSelected} selected
         </Typography>
       ) : (
-        <Typography
-          sx={{ flex: '1 1 100%' }}
-          variant="h6"
-          id="tableTitle"
-          component="div"
-        >
-          Nutrition
-        </Typography>
+        <TextField fullWidth name="search" label="Search"  />
       )}
 
       {numSelected > 0 ? (
@@ -313,10 +299,16 @@ export default function EnhancedTable() {
   const emptyRows =
     page > 0 ? Math.max(0, (1 + page) * rowsPerPage - users.length) : 0;
 
+  const [searchTerm, setSearchTerm] = useState("");
+
+   const handleSearchChange = (event) => {
+     setSearchTerm(event.target.value);
+   };
   
 
   return (
     <Box sx={{ width: '100%' }}>
+      <TextField fullWidth name="search" label="Search" value={searchTerm} onChange={handleSearchChange} />
       <Paper sx={{ width: '100%', mb: 2 }}>
         <EnhancedTableToolbar numSelected={selected.length} />
         <TableContainer>
@@ -333,7 +325,11 @@ export default function EnhancedTable() {
               rowCount={users.length}
             />
             <TableBody>
-              {stableSort(users, getComparator(order, orderBy))
+              {stableSort(users.filter((row) =>
+                  Object.values(row).some(
+                    (value) => value.toString().toLowerCase().includes(searchTerm.toString().toLowerCase())
+                  )
+                ), getComparator(order, orderBy))
                 .slice(page * rowsPerPage, page * rowsPerPage + rowsPerPage)
                 .map((row, index) => {
                   const isItemSelected = isSelected(row.name);

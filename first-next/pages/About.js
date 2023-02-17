@@ -9,6 +9,8 @@ import AddIcon from '@mui/icons-material/Add';
 import Grid from '@mui/system/Unstable_Grid';
 import styled from '@mui/system/styled';
 
+import TableWithSearch from 'Components/tableNormal';
+
 const Item = styled('div')(({ theme }) => ({
     backgroundColor: theme.palette.mode === 'dark' ? '#1A2027' : '#fff',
     borderColor: theme.palette.mode === 'dark' ? '#444d58' : '#ced7e0',
@@ -51,7 +53,10 @@ export default function About() {
         
         </Box>
 
+        <TableWithSearch />
+
         <EnhancedTable />
+
         <Modal
             open={open}
             onClose={handleClose}

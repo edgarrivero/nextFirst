@@ -69,6 +69,7 @@ import DeleteIcon from '@mui/icons-material/Delete';
 import FilterListIcon from '@mui/icons-material/FilterList';
 import { visuallyHidden } from '@mui/utils';
 import {useState, useEffect} from 'react';
+import LongMenu from 'Components/menu';
 
 function descendingComparator(a, b, orderBy) {
   if (b[orderBy] < a[orderBy]) {
@@ -120,6 +121,12 @@ const headCells = [
     numeric: true,
     disablePadding: false,
     label: 'Fat (g)',
+  },
+  {
+    id: 'Acciones',
+    numeric: false,
+    disablePadding: false,
+    label: 'Acciones',
   },
 ];
 
@@ -357,6 +364,9 @@ export default function EnhancedTable() {
                       <TableCell align="left">{row.userId}</TableCell>
                       <TableCell align="left">{row.title}</TableCell>
                       <TableCell align="left">{row.carbs}</TableCell>
+                      <TableCell align="left">
+                        <LongMenu />
+                      </TableCell>
                     </TableRow>
                   );
                 })}

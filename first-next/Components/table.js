@@ -1,57 +1,3 @@
-// import * as React from 'react';
-// import Table from '@mui/material/Table';
-// import TableBody from '@mui/material/TableBody';
-// import TableCell from '@mui/material/TableCell';
-// import TableContainer from '@mui/material/TableContainer';
-// import TableHead from '@mui/material/TableHead';
-// import TableRow from '@mui/material/TableRow';
-// import Paper from '@mui/material/Paper';
-// import {useState, useEffect} from 'react';
-
-// export default function BasicTable() {
-
-//   const [users, setUsers] = useState([])
-
-//   useEffect(() => {
-//     fetch('https://jsonplaceholder.typicode.com/todos')
-//       .then(response => response.json())
-//       .then(data => {
-//         console.log(data)
-//         setUsers(data)
-//       })
-//   }, []);
-
-//   return (
-//     <TableContainer component={Paper}>
-//       <Table elevation={12} sx={{ minWidth: 650 }} aria-label="simple table">
-//         <TableHead>
-//           <TableRow>
-//             <TableCell>Titulo</TableCell>
-//             <TableCell align="right">UsuarioId</TableCell>
-//             <TableCell align="right">Completed</TableCell>
-//           </TableRow>
-//         </TableHead>
-//         <TableBody>
-//           {users.map((row) => (
-//             <TableRow
-//               key={row.id}
-//               sx={{ '&:last-child td, &:last-child th': { border: 0 } }}
-//             >
-//               <TableCell component="th" scope="row">
-//                 {row.title}
-//               </TableCell>
-//               <TableCell align="right">{row.userId}</TableCell>
-//               <TableCell align="right">{row.completed}</TableCell>
-//             </TableRow>
-//           ))}
-//         </TableBody>
-//       </Table>
-//     </TableContainer>
-    
-//   )
-// }
-
-
 import * as React from 'react';
 import { Box, Table, TableContainer, TablePagination, TableHead, TableBody, TableRow, TableCell, TextField } from "@mui/material";
 import PropTypes from 'prop-types';
@@ -70,6 +16,9 @@ import FilterListIcon from '@mui/icons-material/FilterList';
 import { visuallyHidden } from '@mui/utils';
 import {useState, useEffect} from 'react';
 import LongMenu from 'Components/menu';
+import Avatar from '@mui/material/Avatar';
+import AvatarGroup from '@mui/material/AvatarGroup';
+import Chip from '@mui/material/Chip';
 
 function descendingComparator(a, b, orderBy) {
   if (b[orderBy] < a[orderBy]) {
@@ -111,16 +60,22 @@ const headCells = [
     label: 'UserId',
   },
   {
-    id: 'Titulo',
+    id: 'title',
     numeric: false,
     disablePadding: false,
     label: 'Titulo',
   },
   {
-    id: 'fat',
+    id: 'Usuarios',
     numeric: true,
     disablePadding: false,
-    label: 'Fat (g)',
+    label: 'Usuarios',
+  },
+  {
+    id: 'Estado',
+    numeric: true,
+    disablePadding: false,
+    label: 'Estado',
   },
   {
     id: 'Acciones',
@@ -140,17 +95,6 @@ function EnhancedTableHead(props) {
   return (
     <TableHead>
       <TableRow>
-        <TableCell padding="checkbox">
-          <Checkbox
-            color="primary"
-            indeterminate={numSelected > 0 && numSelected < rowCount}
-            checked={rowCount > 0 && numSelected === rowCount}
-            onChange={onSelectAllClick}
-            inputProps={{
-              'aria-label': 'select all desserts',
-            }}
-          />
-        </TableCell>
         {headCells.map((headCell) => (
           <TableCell
             key={headCell.id}
@@ -244,7 +188,7 @@ export default function EnhancedTable() {
   const [users, setUsers] = useState([])
 
   useEffect(() => {
-    fetch('https://jsonplaceholder.typicode.com/todos')
+    fetch('https://jsonplaceholder.typicode.com/photos')
       .then(response => response.json())
       .then(data => {
         console.log(data)
@@ -258,14 +202,14 @@ export default function EnhancedTable() {
     setOrderBy(property);
   };
 
-  const handleSelectAllClick = (event) => {
-    if (event.target.checked) {
-      const newSelected = users.map((n) => n.name);
-      setSelected(newSelected);
-      return;
-    }
-    setSelected([]);
-  };
+  // const handleSelectAllClick = (event) => {
+  //   if (event.target.checked) {
+  //     const newSelected = users.map((n) => n.name);
+  //     setSelected(newSelected);
+  //     return;
+  //   }
+  //   setSelected([]);
+  // };
 
   const handleClick = (event, name) => {
     const selectedIndex = selected.indexOf(name);
@@ -300,7 +244,7 @@ export default function EnhancedTable() {
     setDense(event.target.checked);
   };
 
-  const isSelected = (name) => selected.indexOf(name) !== -1;
+  // const isSelected = (name) => selected.indexOf(name) !== -1;
 
   // Avoid a layout jump when reaching the last page with empty rows.
   const emptyRows =
@@ -317,7 +261,7 @@ export default function EnhancedTable() {
     <Box sx={{ width: '100%' }}>
       <TextField fullWidth name="search" label="Search" value={searchTerm} onChange={handleSearchChange} />
       <Paper sx={{ width: '100%', mb: 2 }}>
-        <EnhancedTableToolbar numSelected={selected.length} />
+        
         <TableContainer>
           <Table
             aria-labelledby="tableTitle"
@@ -327,7 +271,7 @@ export default function EnhancedTable() {
               numSelected={selected.length}
               order={order}
               orderBy={orderBy}
-              onSelectAllClick={handleSelectAllClick}
+              //onSelectAllClick={handleSelectAllClick}
               onRequestSort={handleRequestSort}
               rowCount={users.length}
             />
@@ -339,7 +283,7 @@ export default function EnhancedTable() {
                 ), getComparator(order, orderBy))
                 .slice(page * rowsPerPage, page * rowsPerPage + rowsPerPage)
                 .map((row, index) => {
-                  const isItemSelected = isSelected(row.name);
+                  //const isItemSelected = isSelected(row.name);
                   const labelId = `enhanced-table-checkbox-${index}`;
 
                   return (
@@ -347,23 +291,25 @@ export default function EnhancedTable() {
                       hover
                       onClick={(event) => handleClick(event, row.name)}
                       role="checkbox"
-                      aria-checked={isItemSelected}
+                      //aria-checked={isItemSelected}
                       tabIndex={-1}
                       key={row.name}
-                      selected={isItemSelected}
+                      //selected={isItemSelected}
                     >
-                      <TableCell padding="checkbox">
-                        <Checkbox
-                          color="primary"
-                          checked={isItemSelected}
-                          inputProps={{
-                            'aria-labelledby': labelId,
-                          }}
-                        />
-                      </TableCell>
-                      <TableCell align="left">{row.userId}</TableCell>
+                      <TableCell align="left">{row.albumId}</TableCell>
                       <TableCell align="left">{row.title}</TableCell>
-                      <TableCell align="left">{row.carbs}</TableCell>
+                      <TableCell align="left">
+                        <AvatarGroup max={4}>
+                          <Avatar alt="Remy Sharp" src={ row.url } />
+                          <Avatar alt="Travis Howard" src="/static/images/avatar/2.jpg" />
+                          <Avatar alt="Cindy Baker" src="/static/images/avatar/3.jpg" />
+                          <Avatar alt="Agnes Walker" src="/static/images/avatar/4.jpg" />
+                          <Avatar alt="Trevor Henderson" src="https://via.placeholder.com/150/771796" />
+                        </AvatarGroup>
+                      </TableCell>
+                      <TableCell align="left">
+                        <Chip label={ row.albumId } />
+                      </TableCell>
                       <TableCell align="left">
                         <LongMenu />
                       </TableCell>
